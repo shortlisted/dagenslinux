@@ -7,9 +7,9 @@
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
-<link rel="stylesheet" href="/css/reveal.css"/>
+<link rel="stylesheet" href="../css/reveal.css"/>
 
-<link rel="stylesheet" href="/css/theme/moon.css" id="theme"/>
+<link rel="stylesheet" href="../css/theme/moon.css" id="theme"/>
 
 
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
@@ -18,7 +18,7 @@
         var link = document.createElement( 'link' );
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = '/css/print/pdf.css';
+        link.href = '../css/print/pdf.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
@@ -395,8 +395,8 @@ Läs mer om standard streams <a href="https://shortlisted.github.io/dagenslinux/
 </section>
 </div>
 </div>
-<script src="/lib/js/head.min.js"></script>
-<script src="/js/reveal.js"></script>
+<script src="../lib/js/head.min.js"></script>
+<script src="../js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
@@ -423,11 +423,11 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
- { src: '/lib/js/classList.js', condition: function() { return !document.body.classList; } },
- { src: '/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: '/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: '/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: '/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+ { src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '../plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: '../plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
 });
 </script>
 </body>
