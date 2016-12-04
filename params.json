@@ -1,0 +1,6 @@
+{
+  "name": "#DagensLinux",
+  "tagline": "tips och information för linuxanvändare",
+  "body": "# DagensLinux\r\nEn uppsättning tips och information om att använda terminalmiljön för nya Linuxanvändare (och användare av OS X för den delen)\r\n\r\n## README.md\r\n[Check out a slideshow in swedish about piping and redirecting](https://shortlisted.github.io/dagenslinux/dagenslinux.html) in Linux.\r\n\r\nHTML slides made with the excellent [reveal.js](https://github.com/hakimel/reveal.js/).\r\n\r\nSlides produced in frustrating [emacs](https://www.gnu.org/software/emacs/), using the not so frustrating [spacemacs](http://spacemacs.org/).\r\n\r\nActual slides written using the very good [orgmode](http://orgmode.org/), exported to HTML with the help of very handy [ox-reveal](https://github.com/yjwen/org-reveal)\r\n\r\n## Slides and all that\r\nI'm supplying a friend with random Linux tips/suggestions/commands, and the more indepth areas were hard to cover in just texts, so I put them here instead.\r\n\r\nAll inspiration for actually doing all this in this specific way came from [ransjo](https://github.com/ransjo/). Thanks!\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
