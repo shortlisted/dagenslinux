@@ -1,6 +1,8 @@
 # DagensLinux
 
-[Check out a slideshow in swedish about piping and redirecting](https://shortlisted.github.io/dagenslinux/dagenslinux.html) in Linux.
+Check out the pages of this repository at [https://shortlisted.github.io/dagenslinux/](github pages)
+
+Slideshows about learning linux commands and concepts, in swedish.
 
 HTML slides made with the excellent [reveal.js](https://github.com/hakimel/reveal.js/).
 
