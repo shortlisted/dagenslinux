@@ -1,0 +1,127 @@
+#+Title: #DagensLinux Dailys
+#+Author: [[https://github.com/shortlisted][github.com/shortlisted]]
+#+OPTIONS: ^:nil
+
+* Obligatoriskt
+** Manualsidor med =man=
+   Skriv =man= följt av ett kommando så kan du läsa:
+   
+   Vad kommandot är till för, hur du använder det, och om du har tur finns det till och med exempel!
+** Gör det som superuser med =sudo !!=
+   För att göra vissa ändringar behöver man använda sig av administratörsrättigheter
+
+   Om du vill ta bort en fil som visar sig vara skrivskyddad så kommer =rm fil= inte att fungera
+
+   Med hjälp av =sudo !!= kan du /göra om ditt senaste kommando med administratörsrättigheter/ 
+   
+   =sudo !!= blir =sudo rm fil=
+
+   =!!= är ett specialkommando för *textexpansion* som betyder att det ersätts av /hela förra raden som skrevs/
+
+** Byt katalog effektivt med specialargument till =cd=
+   *change directory* (=cd=) har ett par specialargument som gör navigering mer effektivt
+   | *Kommando* | *Vad*                            | *Från*               | *Till*               |
+   | =cd ..=    | gå upp ett steg                  | /home/sara/Documents | /home/sara           |
+   | =cd -=     | tillbaka till föregående katalog | Nuvarande katalog    | Föregående katalog   |
+   | =cd <TAB>= | autofyll katalognamn             | /home/s<TAB>         | /home/sara           |
+   | =cd ~/=    | förkortning av hemkatalogen      | ~/Documents          | /home/sara/Documents |
+   | =cd=       | direkt till hemkatalogen         | Var som helst        | /home/sara           |
+
+** Du har en historia!
+   Tryck på pil uppåt för att scrolla igenom din historia av kommandon som du har använt
+
+   Du kan också använda kommandot =history= för att få filen skriven till skärmen
+
+   rader som inleds med ett blanksteg kommer inte att sparas till history-filen, användbart om du t.ex. anger ett lösenord
+
+   Du kan också manuellt redigera filen som innehåller historien genom att skriva
+
+   =$EDITOR $HISTFILE=
+
+* Textinmatning
+** Redigera felskrivningar med =^fel^rätt=
+   Om du skrev fel i ditt förra kommando kan du använda 
+   
+   =^felord^rättord= 
+   
+   för att köra om ditt förra kommando med /felord/ utbytt till /rättord/
+
+   Dessutom har =^= ett defaultvärde som är /ingenting/, vilket betyder att om det smög in sig en bokstav för mycket så kan den lätt tas bort
+   
+   felskrivningen =cd /home/saraz/Documents/= 
+   
+   rätts till med =^z= som resulterar i
+
+   =cd /home/sara/Documents=
+** Återanvänd argument med =<ESC>+.=
+   Att trycka på escape-knappen och . samtidigt skriver in ditt senaste *argument* i terminalfönstret
+
+   Om du först kollar innehållet i en katalog med =ls ~/Documents/skola/= 
+
+   så kan katalogen lätt återanvändas
+
+   =cd <esc>+.= kommer att skriva ut 
+
+   =cd ~/Documents/skola= i terminalen!
+
+   På vanliga linux-distros så funkar också =<ALT>+.= på samma sätt (som dock inte fungerar på OS X)
+** Rensa terminalfönstret med =clear=
+   För mycket text i terminalfönstret?
+
+   Skriv =clear= eller tryck =ctrl+l= (litet L) för att ta bort all text
+
+* Kommandon
+** apropos
+   =apropos= är ett terminalkommando som kan hjälpa till att ge förslag på vilka andra kommandon som kan användas för en viss uppgift
+
+   =apropos "remove files"= kommer visa kommandon som kan ta bort filer (hint: det är =rm=!)
+   
+   =apropos editor= listar tillgänliga redigeringsverktyg för terminalmiljön
+
+   läs man-sidor på individuella kommandon för att se detaljerna
+
+* Inställningar
+* Grundläggande terminalmiljö
+** Vilket skal använder du?
+   En tänker ofta att en arbetar i en terminalmiljö, men det går också att beskriva som att en jobbar i ett specifikt /shell/
+   vilket som används kan ses genom att be datorn skriva ut det på skärmen:
+
+   =echo $SHELL=
+
+   Terminalen kommer att svara med vilket skal som används, mest sannolikt */bin/bash/*
+   Det finns andra shells att arbeta i; *zsh*, *ksh*, *sh*, med flera.
+   Du kan använda det shell du faktiskt använder i framtida googlesökningar:
+   "Hur gör jag X i bash?"
+** Sök i en manualsida med =/=
+   Vill du söka i en man-sida? Skriv då ett */* följt av det ord du vill söka efter och tryck på enterknappen.
+   För att göra om samma sökning igen trycker du *n*
+ 
+   Tangenten */* kan kännas som ett märkligt val, men det är knappen till vänster om högra shift på amerikanska keyboards.
+   
+   */*, och många andra kommandon för att navigera i en man-sida ser du om du trycker *h* medan sidan är öppen.
+   Då får du också se att =man= /egentligen/ *pipar* sin output till kommandot *less*, så det går att använda samma typ av navigering i andra texter!
+   =less sarastext.txt= gör det möjligt att läsa en vanlig text via =less=, med samma navigeringsmöjligheter
+
+** Förstå linuxkataloger med =man hier=
+   Vad är vad i en linuxmiljö? Du kan räta ut frågetecknen med =man hier=
+
+   =man hier= är en manulsida som visar vad dom olika katalogerna på en linuxdator innehåller för typ av filer.
+
+   En stöter ofta på instruktioner som är att redgiera eller lägga till en fil i en specifik katalog
+
+   Med =man hier= går det att läsa vad en katalog innehåller för typ av filer:
+
+    */etc* /innehåller konfigurationsfiler som används av den lokala maskinen/
+* Koncept
+** Standard streams
+   Vill du att en command output ska hamna på något annat ställe än att bara printas på skärmen?
+   Då kan du använda *>*
+  
+   =ls > ls.txt= skriver outputen från kommandot =ls= till en fil som heter ls.txt
+
+   *>* skapar en ny fil (*eller skriver över en befintlig!*), för att lägga till text till en redan existerande fil används *>>*
+
+   Den här processen används för att redirecta *standard output* (=stdout=) vilket är det som skrivs på skärmen
+   Det är också möjligt att hantera de två andra standard streams (*standard error* och *standard input*) på liknande sätt.
+
+   Läs mer om standard streams [[https://shortlisted.github.io/dagenslinux/dagenslinux.html][här]]

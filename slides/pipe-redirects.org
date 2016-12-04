@@ -1,0 +1,120 @@
+#+Title: #DagensLinux: Pipe & Redirect
+#+Author: [[https://github.com/shortlisted][github.com/shortlisted]]
+
+* #DagensLinux guide till program
+Jag (tror att) det går att dela in program i två olika typer:
+** Program som ska berätta något för dig
+Den här typen av program skriver någon output på skärmen
+#+ATTR_REVEAL: :frag (roll-in)
+   + =ls= (list directory content)
+   + =cat= (concatenate and print files)
+   + =head= (visa första raderna av en fil)
+   + =grep= (sök efter mönster i fil)
+** Program som ska göra något åt dig
+Den här typen av program utför en specifik handling
+#+ATTR_REVEAL: :frag (roll-in)
+   + =cp= (copy files)
+   + =mv= (move files)
+   + =rm= (remove directory entries)
+   + =ssh= (remote login program)
+
+* Hur fungerar ett program?
+En kort genomgång av ett programs anatomi för att förklara termer vi ska använda
+** cp -- copy files
+man-sidan för cp beskriver kommandot såhär:
+#+ATTR_REVEAL: :frag (roll-in)
+   + =cp= [-R [-H | -L | -P]] [-fi | -n] [-apvX] _source\under{}file_ _target\under{}file_
+   + =cp= [-R [-H | -L | -P]] [-fi | -n] [-apvX] _source\under{}file_ _..._ _target\under{}directory_
+   + kommandot heter =cp=, har ett antal valfria /flaggor/, och tar två _argument_
+   + /flaggor/ är valfria specifika instruktioner som anger /hur/ ett program ska agera
+   + _argument_ är obligatoriska instruktioner
+** Argument?
+#+ATTR_REVEAL: :frag (roll-in)
+   - argumenten är kommandots _input_ som vanligen anger /på vad/ kommandot ska agera
+   - i vissa fall finns standardvärden som används när användaren inte anger ett argument
+#+ATTR_REVEAL: :frag (roll-in)
+     - =ls= fungerar även utan ytterligare argument
+     - =cp= kommer inte utföra något utan att två argument anges
+
+** Exempel på kommandon och argument
+En uppsättning exempel på hur olika kommandon agerar beroende på argument
+#+ATTR_REVEAL: :frag (roll-in)
+| Kommando | Argument            | Resultat                                                     |
+|----------+---------------------+--------------------------------------------------------------|
+| =cat=    | /hej.txt/           | skriver innehållet av hej.txt på skärmen                     |
+| =rm=     | /*.txt/             | raderar alla filer i katalogen som slutar med .txt           |
+| =cp=     | /hej.txt hej-2.txt/ | kopierar innehållet i hej.txt till hej-2.txt                 |
+| =ls=     |                     | skriver innehållet av /current working directory/ på skärmen |
+
+* Program som gör något
+Om programmet ska göra något så har det (oftast) inget att säga
+#+ATTR_REVEAL: :frag (roll-in)
+   - =cp=, =rm= och liknande program utför sina instruktioner /utan output/
+   - förutom om något går fel, då de producerar ett /felmeddelande/
+
+* Program som ska berätta något
+** ls -- list directory content
+#+ATTR_REVEAL: :frag (roll-in)
+   - =ls= är ett program som används för att få information
+   - men =ls= behöver inte nödvändigtvis skicka informationen till användaren
+   - =ls= kan få säga det till =grep=, med en pipe *|*
+   - eller redirecta informationen till något annat ställe, med *>*
+** Dessa program använder sig av _standard output_
+#+ATTR_REVEAL: :frag (roll-in)
+   - *standard output* (eller =stdout=) är en av tre *standard streams*
+   - de andra två är
+     - *standard error* (=stderr=)
+     - *standard input* (=stdin=)
+   - det du /vanligen/ pipar och redirectar är =stdout=
+   - och det som /vanligen/ är din dators =stdin= är det du skriver på ditt tangentbord
+
+* Standard output
+stdout är programmens standardsätt att delge användaren information 
+#+ATTR_REVEAL: :frag (roll-in)
+   - alla program som ska berätta något för dig skickar text till =stdout=
+   - text som skickas till =stdout= skrivs på skärmen
+     #+ATTR_REVEAL: :frag (roll-in)
+     - =man hier=
+     - =cat *.txt=
+     - =echo "hej!"=
+     - =ls=
+   - dessa (och många andra) program skickar data till =stdout=
+   - här går det att använda pipe *|* eller redirect *>*
+** pipes
+#+ATTR_REVEAL: :frag (roll-in)
+   - använd *|* för att ett program ska kommunicera med ett annat
+   - programmets =stdout= skickas som =stdin= till ett annat program
+   - =ls -al | grep .txt=
+   - =stdout= från =ls -al= är innehållet i den nuvarande katalogen, som pipen skickar som =stdin= till =grep=
+   - eftersom vi inte pipar =grep= vidare så gör =grep= som vanligt och skriver till =stdout=
+   - resultatet här blir att "alla rader från =ls= där =grep= hittar strängen /.txt/" skrivs till skärmen
+** redirects
+#+ATTR_REVEAL: :frag (roll-in)
+   - det andra sättet du kan hantera informationen från den här typen av program är med *redirects*
+   - *>* används när du vill att outputen ska hamna på en specifik plats
+   - =cat *.txt > alltext.txt=
+   - *argumentet* (input) till =cat= är /alla filer som slutar med .txt/
+   - =stdout= från =cat= innehåller /all text från alla .txt-filer/
+   - outputen redirectas för att sparas till *alltext.txt*
+
+* Sammanfattning
+#+ATTR_REVEAL: :frag (roll-in)
+  - Vissa program är tysta: ingen output till =stdout=
+  - Vissa program har output, den skickas till =stdout=
+  - =stdout= skrivs till din skärm
+  - Men den kan också skickas vidare
+    - med *|* (pipe) till andra program
+    - med *>* till en annan plats (ofta en fil)
+      - kom ihåg två *>>* om du vill lägga till i en redan existerande fil
+** Exempel: pipe och redirect tillsammans
+#+ATTR_REVEAL: :frag (roll-in)
+   - =cat *.txt | grep "sökord" > söklista.txt=
+   - =stdout= från =cat= är /innehållet av alla .txt-filer/
+   - pipen gör denna output till =stdin= för =grep=
+   - =grep= söker igenom sin input efter /sökord/
+   - med =>= *redirectas* =greps= output /(rader som innehåller "sökord")/ till en ny fil, /söklista.txt/
+* Länkar
+  - [[dagenslinux.org][Presentationen som textfil]]
+  - [[http://www.catonmat.net/download/bash-redirections-cheat-sheet.pdf][Behändigt cheatsheet för redirects]]
+  - [[https://en.wikipedia.org/wiki/Standard_streams][Standard streams på Wikipedia]]
+  - [[https://github.com/shortlisted/dagenslinux/][Github repository för #DagensLinux]]

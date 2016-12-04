@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>#DagensLinux: Pipe &amp; Redirect</title>
+<meta name="author" content="((link (:type https :path //github.com/shortlisted :format bracket :raw-link https://github.com/shortlisted :application nil :search-option nil :begin 1 :end 59 :contents-begin 35 :contents-end 57 :post-blank 0 :parent #0) github.com/shortlisted))"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="/css/reveal.css"/>
+
+<link rel="stylesheet" href="/css/theme/moon.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">#DagensLinux: Pipe &amp; Redirect</h1><h2 class="author"><a href="https://github.com/shortlisted">github.com/shortlisted</a></h2><p class="date">Created: 2016-12-04 Sun 01:18</p>
+</section>
+<section id="table-of-contents">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-orgc4cdb26">1. #DagensLinux guide till program</a>
+<ul>
+<li><a href="#/slide-org6bdf54c">1.1. Program som ska berätta något för dig</a></li>
+<li><a href="#/slide-orgb7ff061">1.2. Program som ska göra något åt dig</a></li>
+</ul>
+</li>
+<li><a href="#/slide-orgf85bb50">2. Hur fungerar ett program?</a>
+<ul>
+<li><a href="#/slide-orgd4d3755">2.1. cp &#x2013; copy files</a></li>
+<li><a href="#/slide-org106db9c">2.2. Argument?</a></li>
+<li><a href="#/slide-org6b2325d">2.3. Exempel på kommandon och argument</a></li>
+</ul>
+</li>
+<li><a href="#/slide-org4bb4017">3. Program som gör något</a></li>
+<li><a href="#/slide-org106c4fd">4. Program som ska berätta något</a>
+<ul>
+<li><a href="#/slide-orgc1233d9">4.1. ls &#x2013; list directory content</a></li>
+<li><a href="#/slide-org1437855">4.2. Dessa program använder sig av <span class="underline">standard output</span></a></li>
+</ul>
+</li>
+<li><a href="#/slide-org63492d2">5. Standard output</a>
+<ul>
+<li><a href="#/slide-orgc40cbfd">5.1. pipes</a></li>
+<li><a href="#/slide-org39d5d09">5.2. redirects</a></li>
+</ul>
+</li>
+<li><a href="#/slide-org9b403f5">6. Sammanfattning</a>
+<ul>
+<li><a href="#/slide-org6453148">6.1. Exempel: pipe och redirect tillsammans</a></li>
+</ul>
+</li>
+<li><a href="#/slide-org3cbd6f3">7. Länkar</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section>
+<section id="slide-orgc4cdb26">
+<h2 id="orgc4cdb26"><span class="section-number-2">1</span> #DagensLinux guide till program</h2>
+<p>
+Jag (tror att) det går att dela in program i två olika typer:
+</p>
+</section>
+<section id="slide-org6bdf54c">
+<h3 id="org6bdf54c"><span class="section-number-3">1.1</span> Program som ska berätta något för dig</h3>
+<p>
+Den här typen av program skriver någon output på skärmen
+</p>
+<ul>
+<li class="fragment roll-in"><code>ls</code> (list directory content)</li>
+<li class="fragment roll-in"><code>cat</code> (concatenate and print files)</li>
+<li class="fragment roll-in"><code>head</code> (visa första raderna av en fil)</li>
+<li class="fragment roll-in"><code>grep</code> (sök efter mönster i fil)</li>
+
+</ul>
+</section>
+<section id="slide-orgb7ff061">
+<h3 id="orgb7ff061"><span class="section-number-3">1.2</span> Program som ska göra något åt dig</h3>
+<p>
+Den här typen av program utför en specifik handling
+</p>
+<ul>
+<li class="fragment roll-in"><code>cp</code> (copy files)</li>
+<li class="fragment roll-in"><code>mv</code> (move files)</li>
+<li class="fragment roll-in"><code>rm</code> (remove directory entries)</li>
+<li class="fragment roll-in"><code>ssh</code> (remote login program)</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf85bb50">
+<h2 id="orgf85bb50"><span class="section-number-2">2</span> Hur fungerar ett program?</h2>
+<p>
+En kort genomgång av ett programs anatomi för att förklara termer vi ska använda
+</p>
+</section>
+<section id="slide-orgd4d3755">
+<h3 id="orgd4d3755"><span class="section-number-3">2.1</span> cp &#x2013; copy files</h3>
+<p>
+man-sidan för cp beskriver kommandot såhär:
+</p>
+<ul>
+<li class="fragment roll-in"><code>cp</code> [-R [-H | -L | -P]] [-fi | -n] [-apvX] <span class="underline">source_file</span> <span class="underline">target_file</span></li>
+<li class="fragment roll-in"><code>cp</code> [-R [-H | -L | -P]] [-fi | -n] [-apvX] <span class="underline">source_file</span> <span class="underline">&#x2026;</span> <span class="underline">target_directory</span></li>
+<li class="fragment roll-in">kommandot heter <code>cp</code>, har ett antal valfria <i>flaggor</i>, och tar två <span class="underline">argument</span></li>
+<li class="fragment roll-in"><i>flaggor</i> är valfria specifika instruktioner som anger <i>hur</i> ett program ska agera</li>
+<li class="fragment roll-in"><span class="underline">argument</span> är obligatoriska instruktioner</li>
+
+</ul>
+</section>
+<section id="slide-org106db9c">
+<h3 id="org106db9c"><span class="section-number-3">2.2</span> Argument?</h3>
+<ul>
+<li class="fragment roll-in">argumenten är kommandots <span class="underline">input</span> som vanligen anger <i>på vad</i> kommandot ska agera</li>
+<li class="fragment roll-in">i vissa fall finns standardvärden som används när användaren inte anger ett argument</li>
+
+</ul>
+<ul>
+<li class="fragment roll-in"><code>ls</code> fungerar även utan ytterligare argument</li>
+<li class="fragment roll-in"><code>cp</code> kommer inte utföra något utan att två argument anges</li>
+
+</ul>
+
+</section>
+<section id="slide-org6b2325d">
+<h3 id="org6b2325d"><span class="section-number-3">2.3</span> Exempel på kommandon och argument</h3>
+<p>
+En uppsättning exempel på hur olika kommandon agerar beroende på argument
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="fragment (roll-in)">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Kommando</th>
+<th scope="col" class="org-left">Argument</th>
+<th scope="col" class="org-left">Resultat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>cat</code></td>
+<td class="org-left"><i>hej.txt</i></td>
+<td class="org-left">skriver innehållet av hej.txt på skärmen</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>rm</code></td>
+<td class="org-left"><i>*.txt</i></td>
+<td class="org-left">raderar alla filer i katalogen som slutar med .txt</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>cp</code></td>
+<td class="org-left"><i>hej.txt hej-2.txt</i></td>
+<td class="org-left">kopierar innehållet i hej.txt till hej-2.txt</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ls</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">skriver innehållet av <i>current working directory</i> på skärmen</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+</section>
+<section>
+<section id="slide-org4bb4017">
+<h2 id="org4bb4017"><span class="section-number-2">3</span> Program som gör något</h2>
+<p>
+Om programmet ska göra något så har det (oftast) inget att säga
+</p>
+<ul>
+<li class="fragment roll-in"><code>cp</code>, <code>rm</code> och liknande program utför sina instruktioner <i>utan output</i></li>
+<li class="fragment roll-in">förutom om något går fel, då de producerar ett <i>felmeddelande</i></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org106c4fd">
+<h2 id="org106c4fd"><span class="section-number-2">4</span> Program som ska berätta något</h2>
+<div class="outline-text-2" id="text-4">
+</div></section>
+<section id="slide-orgc1233d9">
+<h3 id="orgc1233d9"><span class="section-number-3">4.1</span> ls &#x2013; list directory content</h3>
+<ul>
+<li class="fragment roll-in"><code>ls</code> är ett program som används för att få information</li>
+<li class="fragment roll-in">men <code>ls</code> behöver inte nödvändigtvis skicka informationen till användaren</li>
+<li class="fragment roll-in"><code>ls</code> kan få säga det till <code>grep</code>, med en pipe <b>|</b></li>
+<li class="fragment roll-in">eller redirecta informationen till något annat ställe, med <b>&gt;</b></li>
+
+</ul>
+</section>
+<section id="slide-org1437855">
+<h3 id="org1437855"><span class="section-number-3">4.2</span> Dessa program använder sig av <span class="underline">standard output</span></h3>
+<ul>
+<li class="fragment roll-in"><b>standard output</b> (eller <code>stdout</code>) är en av tre <b>standard streams</b></li>
+<li class="fragment roll-in">de andra två är
+<ul>
+<li><b>standard error</b> (<code>stderr</code>)</li>
+<li><b>standard input</b> (<code>stdin</code>)</li>
+
+</ul></li>
+<li class="fragment roll-in">det du <i>vanligen</i> pipar och redirectar är <code>stdout</code></li>
+<li class="fragment roll-in">och det som <i>vanligen</i> är din dators <code>stdin</code> är det du skriver på ditt tangentbord</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org63492d2">
+<h2 id="org63492d2"><span class="section-number-2">5</span> Standard output</h2>
+<p>
+stdout är programmens standardsätt att delge användaren information 
+</p>
+<ul>
+<li class="fragment roll-in">alla program som ska berätta något för dig skickar text till <code>stdout</code></li>
+<li class="fragment roll-in">text som skickas till <code>stdout</code> skrivs på skärmen
+<ul>
+<li class="fragment roll-in"><code>man hier</code></li>
+<li class="fragment roll-in"><code>cat *.txt</code></li>
+<li class="fragment roll-in"><code>echo "hej!"</code></li>
+<li class="fragment roll-in"><code>ls</code></li>
+
+</ul></li>
+<li class="fragment roll-in">dessa (och många andra) program skickar data till <code>stdout</code></li>
+<li class="fragment roll-in">här går det att använda pipe <b>|</b> eller redirect <b>&gt;</b></li>
+
+</ul>
+</section>
+<section id="slide-orgc40cbfd">
+<h3 id="orgc40cbfd"><span class="section-number-3">5.1</span> pipes</h3>
+<ul>
+<li class="fragment roll-in">använd <b>|</b> för att ett program ska kommunicera med ett annat</li>
+<li class="fragment roll-in">programmets <code>stdout</code> skickas som <code>stdin</code> till ett annat program</li>
+<li class="fragment roll-in"><code>ls -al | grep .txt</code></li>
+<li class="fragment roll-in"><code>stdout</code> från <code>ls -al</code> är innehållet i den nuvarande katalogen, som pipen skickar som <code>stdin</code> till <code>grep</code></li>
+<li class="fragment roll-in">eftersom vi inte pipar <code>grep</code> vidare så gör <code>grep</code> som vanligt och skriver till <code>stdout</code></li>
+<li class="fragment roll-in">resultatet här blir att "alla rader från <code>ls</code> där <code>grep</code> hittar strängen <i>.txt</i>" skrivs till skärmen</li>
+
+</ul>
+</section>
+<section id="slide-org39d5d09">
+<h3 id="org39d5d09"><span class="section-number-3">5.2</span> redirects</h3>
+<ul>
+<li class="fragment roll-in">det andra sättet du kan hantera informationen från den här typen av program är med <b>redirects</b></li>
+<li class="fragment roll-in"><b>&gt;</b> används när du vill att outputen ska hamna på en specifik plats</li>
+<li class="fragment roll-in"><code>cat *.txt &gt; alltext.txt</code></li>
+<li class="fragment roll-in"><b>argumentet</b> (input) till <code>cat</code> är <i>alla filer som slutar med .txt</i></li>
+<li class="fragment roll-in"><code>stdout</code> från <code>cat</code> innehåller <i>all text från alla .txt-filer</i></li>
+<li class="fragment roll-in">outputen redirectas för att sparas till <b>alltext.txt</b></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org9b403f5">
+<h2 id="org9b403f5"><span class="section-number-2">6</span> Sammanfattning</h2>
+<ul>
+<li class="fragment roll-in">Vissa program är tysta: ingen output till <code>stdout</code></li>
+<li class="fragment roll-in">Vissa program har output, den skickas till <code>stdout</code></li>
+<li class="fragment roll-in"><code>stdout</code> skrivs till din skärm</li>
+<li class="fragment roll-in">Men den kan också skickas vidare
+<ul>
+<li>med <b>|</b> (pipe) till andra program</li>
+<li>med <b>&gt;</b> till en annan plats (ofta en fil)
+<ul>
+<li>kom ihåg två <b>&gt;&gt;</b> om du vill lägga till i en redan existerande fil</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org6453148">
+<h3 id="org6453148"><span class="section-number-3">6.1</span> Exempel: pipe och redirect tillsammans</h3>
+<ul>
+<li class="fragment roll-in"><code>cat *.txt | grep "sökord" &gt; söklista.txt</code></li>
+<li class="fragment roll-in"><code>stdout</code> från <code>cat</code> är <i>innehållet av alla .txt-filer</i></li>
+<li class="fragment roll-in">pipen gör denna output till <code>stdin</code> för <code>grep</code></li>
+<li class="fragment roll-in"><code>grep</code> söker igenom sin input efter <i>sökord</i></li>
+<li class="fragment roll-in">med <code>&gt;</code> <b>redirectas</b> <code>greps</code> output <i>(rader som innehåller "sökord")</i> till en ny fil, <i>söklista.txt</i></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org3cbd6f3">
+<h2 id="org3cbd6f3"><span class="section-number-2">7</span> Länkar</h2>
+<ul>
+<li><a href="pipe-redirects.org">Presentationen som textfil</a></li>
+<li><a href="http://www.catonmat.net/download/bash-redirections-cheat-sheet.pdf">Behändigt cheatsheet för redirects</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Standard_streams">Standard streams på Wikipedia</a></li>
+<li><a href="https://github.com/shortlisted/dagenslinux/">Github repository för #DagensLinux</a></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="/lib/js/head.min.js"></script>
+<script src="/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: '/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: '/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: '/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

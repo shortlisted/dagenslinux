@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>#DagensLinux Dailys</title>
+<meta name="author" content="((link (:type https :path //github.com/shortlisted :format bracket :raw-link https://github.com/shortlisted :application nil :search-option nil :begin 1 :end 59 :contents-begin 35 :contents-end 57 :post-blank 0 :parent #0) github.com/shortlisted))"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="/css/reveal.css"/>
+
+<link rel="stylesheet" href="/css/theme/moon.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">#DagensLinux Dailys</h1><h2 class="author"><a href="https://github.com/shortlisted">github.com/shortlisted</a></h2><p class="date">Created: 2016-12-04 Sun 01:15</p>
+</section>
+<section id="table-of-contents">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-orgb938120">1. Obligatoriskt</a>
+<ul>
+<li><a href="#/slide-orgf7c5602">1.1. Manualsidor med <code>man</code></a></li>
+<li><a href="#/slide-orgc38b797">1.2. Gör det som superuser med <code>sudo !!</code></a></li>
+<li><a href="#/slide-org015cf42">1.3. Byt katalog effektivt med specialargument till <code>cd</code></a></li>
+<li><a href="#/slide-orgc6ae1e1">1.4. Du har en historia!</a></li>
+</ul>
+</li>
+<li><a href="#/slide-orgd8d3e0e">2. Textinmatning</a>
+<ul>
+<li><a href="#/slide-org37ad68a">2.1. Redigera felskrivningar med <code>^fel^rätt</code></a></li>
+<li><a href="#/slide-org533bec7">2.2. Återanvänd argument med <code>&lt;ESC&gt;+.</code></a></li>
+<li><a href="#/slide-org5a0a557">2.3. Rensa terminalfönstret med <code>clear</code></a></li>
+</ul>
+</li>
+<li><a href="#/slide-org6284068">3. Kommandon</a>
+<ul>
+<li><a href="#/slide-org1eeac39">3.1. apropos</a></li>
+</ul>
+</li>
+<li><a href="#/slide-org8daf953">4. Inställningar</a></li>
+<li><a href="#/slide-org268b0ef">5. Grundläggande terminalmiljö</a>
+<ul>
+<li><a href="#/slide-org8908928">5.1. Vilket skal använder du?</a></li>
+<li><a href="#/slide-orgd6a82f5">5.2. Sök i en manualsida med <code>/</code></a></li>
+<li><a href="#/slide-org76b8ba7">5.3. Förstå linuxkataloger med <code>man hier</code></a></li>
+</ul>
+</li>
+<li><a href="#/slide-org9ca34d4">6. Koncept</a>
+<ul>
+<li><a href="#/slide-orge574a93">6.1. Standard streams</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section>
+<section id="slide-orgb938120">
+<h2 id="orgb938120"><span class="section-number-2">1</span> Obligatoriskt</h2>
+<div class="outline-text-2" id="text-1">
+</div></section>
+<section id="slide-orgf7c5602">
+<h3 id="orgf7c5602"><span class="section-number-3">1.1</span> Manualsidor med <code>man</code></h3>
+<p>
+Skriv <code>man</code> följt av ett kommando så kan du läsa:
+</p>
+
+<p>
+Vad kommandot är till för, hur du använder det, och om du har tur finns det till och med exempel!
+</p>
+</section>
+<section id="slide-orgc38b797">
+<h3 id="orgc38b797"><span class="section-number-3">1.2</span> Gör det som superuser med <code>sudo !!</code></h3>
+<p>
+För att göra vissa ändringar behöver man använda sig av administratörsrättigheter
+</p>
+
+<p>
+Om du vill ta bort en fil som visar sig vara skrivskyddad så kommer <code>rm fil</code> inte att fungera
+</p>
+
+<p>
+Med hjälp av <code>sudo !!</code> kan du <i>göra om ditt senaste kommando med administratörsrättigheter</i> 
+</p>
+
+<p>
+<code>sudo !!</code> blir <code>sudo rm fil</code>
+</p>
+
+<p>
+<code>!!</code> är ett specialkommando för <b>textexpansion</b> som betyder att det ersätts av <i>hela förra raden som skrevs</i>
+</p>
+
+</section>
+<section id="slide-org015cf42">
+<h3 id="org015cf42"><span class="section-number-3">1.3</span> Byt katalog effektivt med specialargument till <code>cd</code></h3>
+<p>
+<b>change directory</b> (<code>cd</code>) har ett par specialargument som gör navigering mer effektivt
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><b>Kommando</b></td>
+<td class="org-left"><b>Vad</b></td>
+<td class="org-left"><b>Från</b></td>
+<td class="org-left"><b>Till</b></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>cd ..</code></td>
+<td class="org-left">gå upp ett steg</td>
+<td class="org-left">/home/sara/Documents</td>
+<td class="org-left">/home/sara</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>cd -</code></td>
+<td class="org-left">tillbaka till föregående katalog</td>
+<td class="org-left">Nuvarande katalog</td>
+<td class="org-left">Föregående katalog</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>cd &lt;TAB&gt;</code></td>
+<td class="org-left">autofyll katalognamn</td>
+<td class="org-left">/home/s&lt;TAB&gt;</td>
+<td class="org-left">/home/sara</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>cd ~/</code></td>
+<td class="org-left">förkortning av hemkatalogen</td>
+<td class="org-left">~/Documents</td>
+<td class="org-left">/home/sara/Documents</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>cd</code></td>
+<td class="org-left">direkt till hemkatalogen</td>
+<td class="org-left">Var som helst</td>
+<td class="org-left">/home/sara</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orgc6ae1e1">
+<h3 id="orgc6ae1e1"><span class="section-number-3">1.4</span> Du har en historia!</h3>
+<p>
+Tryck på pil uppåt för att scrolla igenom din historia av kommandon som du har använt
+</p>
+
+<p>
+Du kan också använda kommandot <code>history</code> för att få filen skriven till skärmen
+</p>
+
+<p>
+rader som inleds med ett blanksteg kommer inte att sparas till history-filen, användbart om du t.ex. anger ett lösenord
+</p>
+
+<p>
+Du kan också manuellt redigera filen som innehåller historien genom att skriva
+</p>
+
+<p>
+<code>$EDITOR $HISTFILE</code>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd8d3e0e">
+<h2 id="orgd8d3e0e"><span class="section-number-2">2</span> Textinmatning</h2>
+<div class="outline-text-2" id="text-2">
+</div></section>
+<section id="slide-org37ad68a">
+<h3 id="org37ad68a"><span class="section-number-3">2.1</span> Redigera felskrivningar med <code>^fel^rätt</code></h3>
+<p>
+Om du skrev fel i ditt förra kommando kan du använda 
+</p>
+
+<p>
+<code>^felord^rättord</code> 
+</p>
+
+<p>
+för att köra om ditt förra kommando med <i>felord</i> utbytt till <i>rättord</i>
+</p>
+
+<p>
+Dessutom har <code>^</code> ett defaultvärde som är <i>ingenting</i>, vilket betyder att om det smög in sig en bokstav för mycket så kan den lätt tas bort
+</p>
+
+<p>
+felskrivningen <code>cd /home/saraz/Documents/</code> 
+</p>
+
+<p>
+rätts till med <code>^z</code> som resulterar i
+</p>
+
+<p>
+<code>cd /home/sara/Documents</code>
+</p>
+</section>
+<section id="slide-org533bec7">
+<h3 id="org533bec7"><span class="section-number-3">2.2</span> Återanvänd argument med <code>&lt;ESC&gt;+.</code></h3>
+<p>
+Att trycka på escape-knappen och . samtidigt skriver in ditt senaste <b>argument</b> i terminalfönstret
+</p>
+
+<p>
+Om du först kollar innehållet i en katalog med <code>ls ~/Documents/skola/</code> 
+</p>
+
+<p>
+så kan katalogen lätt återanvändas
+</p>
+
+<p>
+<code>cd &lt;esc&gt;+.</code> kommer att skriva ut 
+</p>
+
+<p>
+<code>cd ~/Documents/skola</code> i terminalen!
+</p>
+
+<p>
+På vanliga linux-distros så funkar också <code>&lt;ALT&gt;+.</code> på samma sätt (som dock inte fungerar på OS X)
+</p>
+</section>
+<section id="slide-org5a0a557">
+<h3 id="org5a0a557"><span class="section-number-3">2.3</span> Rensa terminalfönstret med <code>clear</code></h3>
+<p>
+För mycket text i terminalfönstret?
+</p>
+
+<p>
+Skriv <code>clear</code> eller tryck <code>ctrl+l</code> (litet L) för att ta bort all text
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org6284068">
+<h2 id="org6284068"><span class="section-number-2">3</span> Kommandon</h2>
+<div class="outline-text-2" id="text-3">
+</div></section>
+<section id="slide-org1eeac39">
+<h3 id="org1eeac39"><span class="section-number-3">3.1</span> apropos</h3>
+<p>
+<code>apropos</code> är ett terminalkommando som kan hjälpa till att ge förslag på vilka andra kommandon som kan användas för en viss uppgift
+</p>
+
+<p>
+<code>apropos "remove files"</code> kommer visa kommandon som kan ta bort filer (hint: det är <code>rm</code>!)
+</p>
+
+<p>
+<code>apropos editor</code> listar tillgänliga redigeringsverktyg för terminalmiljön
+</p>
+
+<p>
+läs man-sidor på individuella kommandon för att se detaljerna
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org8daf953">
+<h2 id="org8daf953"><span class="section-number-2">4</span> Inställningar</h2>
+</section>
+</section>
+<section>
+<section id="slide-org268b0ef">
+<h2 id="org268b0ef"><span class="section-number-2">5</span> Grundläggande terminalmiljö</h2>
+<div class="outline-text-2" id="text-5">
+</div></section>
+<section id="slide-org8908928">
+<h3 id="org8908928"><span class="section-number-3">5.1</span> Vilket skal använder du?</h3>
+<p>
+En tänker ofta att en arbetar i en terminalmiljö, men det går också att beskriva som att en jobbar i ett specifikt <i>shell</i>
+vilket som används kan ses genom att be datorn skriva ut det på skärmen:
+</p>
+
+<p>
+<code>echo $SHELL</code>
+</p>
+
+<p>
+Terminalen kommer att svara med vilket skal som används, mest sannolikt <b><i>bin/bash</i></b>
+Det finns andra shells att arbeta i; <b>zsh</b>, <b>ksh</b>, <b>sh</b>, med flera.
+Du kan använda det shell du faktiskt använder i framtida googlesökningar:
+"Hur gör jag X i bash?"
+</p>
+</section>
+<section id="slide-orgd6a82f5">
+<h3 id="orgd6a82f5"><span class="section-number-3">5.2</span> Sök i en manualsida med <code>/</code></h3>
+<p>
+Vill du söka i en man-sida? Skriv då ett <b>/</b> följt av det ord du vill söka efter och tryck på enterknappen.
+För att göra om samma sökning igen trycker du <b>n</b>
+</p>
+
+<p>
+Tangenten <b>/</b> kan kännas som ett märkligt val, men det är knappen till vänster om högra shift på amerikanska keyboards.
+</p>
+
+<p>
+<b>/</b>, och många andra kommandon för att navigera i en man-sida ser du om du trycker <b>h</b> medan sidan är öppen.
+Då får du också se att <code>man</code> <i>egentligen</i> <b>pipar</b> sin output till kommandot <b>less</b>, så det går att använda samma typ av navigering i andra texter!
+<code>less sarastext.txt</code> gör det möjligt att läsa en vanlig text via <code>less</code>, med samma navigeringsmöjligheter
+</p>
+
+</section>
+<section id="slide-org76b8ba7">
+<h3 id="org76b8ba7"><span class="section-number-3">5.3</span> Förstå linuxkataloger med <code>man hier</code></h3>
+<p>
+Vad är vad i en linuxmiljö? Du kan räta ut frågetecknen med <code>man hier</code>
+</p>
+
+<p>
+<code>man hier</code> är en manulsida som visar vad dom olika katalogerna på en linuxdator innehåller för typ av filer.
+</p>
+
+<p>
+En stöter ofta på instruktioner som är att redgiera eller lägga till en fil i en specifik katalog
+</p>
+
+<p>
+Med <code>man hier</code> går det att läsa vad en katalog innehåller för typ av filer:
+</p>
+
+<p>
+<b>/etc</b> <i>innehåller konfigurationsfiler som används av den lokala maskinen</i>
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org9ca34d4">
+<h2 id="org9ca34d4"><span class="section-number-2">6</span> Koncept</h2>
+<div class="outline-text-2" id="text-6">
+</div></section>
+<section id="slide-orge574a93">
+<h3 id="orge574a93"><span class="section-number-3">6.1</span> Standard streams</h3>
+<p>
+Vill du att en command output ska hamna på något annat ställe än att bara printas på skärmen?
+Då kan du använda <b>&gt;</b>
+</p>
+
+<p>
+<code>ls &gt; ls.txt</code> skriver outputen från kommandot <code>ls</code> till en fil som heter ls.txt
+</p>
+
+<p>
+<b>&gt;</b> skapar en ny fil (<b>eller skriver över en befintlig!</b>), för att lägga till text till en redan existerande fil används <b>&gt;&gt;</b>
+</p>
+
+<p>
+Den här processen används för att redirecta <b>standard output</b> (<code>stdout</code>) vilket är det som skrivs på skärmen
+Det är också möjligt att hantera de två andra standard streams (<b>standard error</b> och <b>standard input</b>) på liknande sätt.
+</p>
+
+<p>
+Läs mer om standard streams <a href="https://shortlisted.github.io/dagenslinux/dagenslinux.html">här</a>
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="/lib/js/head.min.js"></script>
+<script src="/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: '/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: '/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: '/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: '/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
