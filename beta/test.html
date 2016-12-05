@@ -1,9 +1,16 @@
 <!DOCTYPE html>
+<style>
+  .domain-text {
+    color: rgb(174, 139, 45);
+  }
+</style>
+  
 <html>
   <body>
 
     <p id="hostname"></p>
 
+    <span class="domain-text"><p id="hostname"></span>
     <script>
 document.getElementById("hostname").innerHTML = 
 window.location.hostname;
