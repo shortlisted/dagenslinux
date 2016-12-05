@@ -1,0 +1,57 @@
+<style>
+ body {
+     background-color: rgb(22, 53, 64);
+     font-family: Monospace;
+     font-size: 18px;
+ }
+ a {
+     color: rgb(102, 106, 179);
+ }
+
+ .user-text {
+     color: rgb(195, 68, 128);
+ }
+ .domain-text {
+     color: rgb(174, 139, 45);
+ }
+ .accent-text {
+     color: rgb(81,159,152);
+ }
+ .content-text {
+     color: rgb(149, 161, 161);
+ }
+ .symbol-text{
+     color: rgb(203, 66, 56);
+ }
+ .return-text {
+     color: rgb(128, 141, 143);
+ }
+ <!-- blink tag for fun. maybe not so fun.
+ .blink-tag {
+     color: rgb(149, 161, 161);
+     animation: blinker .5s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+ }
+ @keyframes blinker { to { opacity: 0; } }
+-->
+</style>
+
+<script>
+document.getElementById("hostname").innerHTML = "Hello " + window.location.href;
+</script>
+
+<p id="hostname"></p>
+
+<span class="user-text">user</span><span class=accent-text>@</span><span class="domain-text">shortlisted.github.io</span><span class="symbol-text">:</span><span class="accent-text">/dagenslinux/</span><span class="symbol-text">|</span><span class="accent-text">&#8658;</span> <span class="content-text">find . -name $requri</span>
+
+<p class="return-text" >find typo.html: No such file or directory</p>
+
+<span class="user-text">user</span><span class=accent-text>@</span><span class="domain-text">shortlisted.github.io</span><span class="symbol-text">:</span><span class="accent-text">/dagenslinux/</span><span class="symbol-text">|</span><span class="accent-text">&#8658;</span> <span class="content-text">cat * | grep $requri</span>
+
+<span class="user-text">user</span><span class=accent-text>@</span><span class="domain-text">shortlisted.github.io</span><span class="symbol-text">:</span><span class="accent-text">/dagenslinux/</span><span class="symbol-text">|</span><span class="accent-text">&#8658;</span> <span class="content-text">echo 404error.txt</span>
+
+<p class="return-text" >404 File not found<br />
+Perhaps you made a typo in the page name?<br />
+    If you are here because of a link, you can<br />
+    <a href="https://github.com/shortlisted/dagenslinux/issues">report an issue</a> and it will get fixed.</p>
+
+<span class="user-text">user</span><span class=accent-text>@</span><span class="domain-text">shortlisted.github.io</span><span class="symbol-text">:</span><span class="accent-text">/dagenslinux/</span><span class="symbol-text">|</span><span class="accent-text">&#8658; <span class="content-text"> &#x2588;</span>
