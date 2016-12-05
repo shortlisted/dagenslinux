@@ -1,14 +1,19 @@
 <!DOCTYPE html>
+<style>
+  .domain-text {
+    color: rgb(174, 139, 45);
+  }
+</style>
+  
 <html>
   <body>
 
-    <p>Display the hostname (and the port if not 80) of the current URL.</p>
+    <p id="hostname"></p>
 
-    <p id="demo"></p>
-
+    <span class="domain-text"><p id="hostname"></p></span>
     <script>
-document.getElementById("demo").innerHTML = 
-"Page hostname is: " + window.location.hostname;
+document.getElementById("hostname").innerHTML = 
+window.location.hostname;
     </script>
 
   </body>
